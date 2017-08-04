@@ -5,16 +5,17 @@ setInterval(function(){
 }, 1000);
 
 function startOsc(frequency){  // Frequency is passed to this function
-	// buffer
-	buffer = context.createBuffer(1, 22050, 22050);
+
 	// oscillatorNode
 	const oscillator = context.createOscillator(); // Create sound source
-	oscillator.type = 'sine'; // Sine wave
+	oscillator.type = 'triangle'; // Sine wave
 	oscillator.frequency.value = frequency; // Frequency in hertz (passed from noteHash)
 	oscillator.start(0); // Play oscillator immediately, start at 0 seconds
+
 	// gainNode
 	gain = context.createGain(); // Create gain node
 	gain.gain.value = 0.1; // Set gain to full volume
+
 	// Connect the Nodes
 	oscillator.connect(gain); // Connect oscillator to gain
 	gain.connect(context.destination); // Connect gain to output
@@ -30,13 +31,15 @@ function off(oscillator) {
 
 
 $(window).keydown(function(event){
+	console.log(event);
 	if (event.key === "d") {
-		noteHash[event.key] = ((Math.random()+10)*((Math.random()+1)*100));
+		noteHash[event.key] = ((Math.random()+10)*((Math.random()+1)*100)); // "d" on keyboard now produces a random frequency (where B#4 would be)
 		oscHash[event.key] = startOsc(noteHash[event.key]);
 	}
   else if (!event.originalEvent.repeat && event.key in noteHash) {
     oscHash[event.key] = startOsc(noteHash[event.key]);
   }
+	console.log(oscHash);
 });
 
 
@@ -81,15 +84,8 @@ var noteHash = {  // keys are keyboard keys, values are note frequencies
 }
 
 $(window).keyup(function(event){
-	console.log(event.key);
   if (event.key in oscHash) {
     off(oscHash[event.key]);
 		delete oscHash[event.key];
   }
 });
-
-// ---------------------------------------------
-
-// Analyzer
-
-var analyser = context.createAnalyser();

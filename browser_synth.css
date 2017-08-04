@@ -1,2 +1,10 @@
-#synthheader {
+body {
+   background-color: #00cdcd;
+   text-color: white;
+}
+
+p, #synthheader {
+  background-color: #00cdcd;
+  color: white;
+  font-size: 80px;
 }
