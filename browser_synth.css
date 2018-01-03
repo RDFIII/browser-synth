@@ -3,8 +3,11 @@ body {
    text-color: white;
 }
 
-p, #synthheader {
+#synthheader {
   background-color: #00cdcd;
   color: white;
   font-size: 80px;
+  font-style: italic;
+  display: flex;
+  padding-left: 40px;
 }
